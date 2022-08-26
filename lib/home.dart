@@ -9,30 +9,44 @@ class HomePage extends StatelessWidget {
     var appName = 'iMaz';
     String name = 'Yogesh Giri';
     int maxAge = add(a: age);
+    // var imagePath = 'assets/img/Me.jpeg';
 
     var scaffold = Scaffold(
       appBar: AppBar(
         title: Text(appName),
       ),
-      body: Center(child: Text("Welcome in $appName")),
-      drawer: const Drawer(
+      body: Center(
+          child: Column(
+        children: [
+          Image.asset('assets/img/Me.jpeg'),
+          Text(
+            "Welcome in $appName",
+            style: const TextStyle(
+                fontSize: 25,
+                height: 5,
+                fontWeight: FontWeight.w900,
+                color: Colors.blue),
+          )
+        ],
+      )),
+      drawer: Drawer(
           child: Center(
               child: Text.rich(
         TextSpan(
           text: 'Welcome !\n',
-          style: TextStyle(height: 5),
+          style: const TextStyle(height: 5),
           children: <TextSpan>[
             TextSpan(
-              text: 'Name: Yogesh Giri\n',
-              style: TextStyle(
+              text: 'Name: $name \n',
+              style: const TextStyle(
                   fontSize: 25,
                   height: 0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue),
+                  color: Colors.deepOrange),
             ),
             TextSpan(
-              text: 'Age: 22\n',
-              style: TextStyle(
+              text: 'Age: $maxAge\n',
+              style: const TextStyle(
                   fontSize: 25,
                   height: 0,
                   fontWeight: FontWeight.bold,
