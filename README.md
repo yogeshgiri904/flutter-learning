@@ -1,4 +1,4 @@
-# ims
+# iMaz
 
 A new Flutter project.
 

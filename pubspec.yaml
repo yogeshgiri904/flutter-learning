@@ -1,4 +1,4 @@
-name: ims
+name: iMaz
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
+  sizer: ^2.0.15
 
 
 dev_dependencies:
@@ -79,15 +80,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Raleway
+  #   - family: Schyler
   #     fonts:
-  #       - asset: fonts/Raleway-Regular.ttf
-  #       - asset: fonts/Raleway-Italic.ttf
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: RobotoMono
+  #   - family: Trajan Pro
   #     fonts:
-  #       - asset: fonts/RobotoMono-Regular.ttf
-  #       - asset: fonts/RobotoMono-Bold.ttf
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,

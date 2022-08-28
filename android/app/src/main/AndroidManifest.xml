@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ims">
+    package="com.example.iMaz">
    <application
-        android:label="ims"
+        android:label="iMaz"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

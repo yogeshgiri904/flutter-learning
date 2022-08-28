@@ -1,6 +1,6 @@
 {
-    "name": "ims",
-    "short_name": "ims",
+    "name": "iMaz",
+    "short_name": "iMaz",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
