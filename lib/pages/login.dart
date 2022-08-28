@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ims/routes/routes.dart';
 
@@ -56,6 +57,7 @@ class LoginPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 3.0, horizontal: 10.0),
                     child: TextFormField(
+                      obscureText: true,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.lock_outline_sharp),
                         hintText: 'xxxxxxxx', // placeholder
