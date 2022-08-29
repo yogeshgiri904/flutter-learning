@@ -2,20 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iMaz/routes/routes.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class RoughPage extends StatefulWidget {
+  const RoughPage({Key? key}) : super(key: key);
+
+  @override
+  State<RoughPage> createState() => _RoughPageState();
+}
+
+class _RoughPageState extends State<RoughPage> {
+  int isSelected = 2;
+  String devName = 'Yogesh Giri';
+  int age = 20;
+  String appName = 'iMaz';
 
   @override
   Widget build(BuildContext context) {
-    int age = 20;
-    var appName = 'iMaz';
-    String name = 'Yogesh Giri';
-    int maxAge = add(a: age);
-
     var scaffold = Scaffold(
-      appBar: AppBar(
-        title: Text(appName),
-      ),
+      backgroundColor: Colors.transparent,
       body: Center(
           child: Column(
         children: [
@@ -23,17 +26,17 @@ class HomePage extends StatelessWidget {
           Text(
             "Welcome in $appName",
             style: const TextStyle(
-                fontSize: 25,
-                height: 2,
+                fontSize: 20,
+                height: 3,
                 fontWeight: FontWeight.w900,
                 color: Colors.blue),
           ),
           const Text(
             "Coming soon...",
-            style: TextStyle(fontSize: 20, color: Colors.blue),
+            style: TextStyle(fontSize: 14, color: Colors.blue),
           ),
           const SizedBox(
-            height: 5,
+            height: 15,
           ),
           ElevatedButton(
             style: TextButton.styleFrom(

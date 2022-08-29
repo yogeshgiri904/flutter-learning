@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iMaz/pages/home.dart';
 import 'package:iMaz/pages/login.dart';
+import 'package:iMaz/pages/rough.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:sizer/sizer.dart';
 
@@ -33,6 +34,8 @@ class MyApp extends StatelessWidget {
         routes: {
           MyRoutes.loginRoute: (context) => const LoginPage(),
           MyRoutes.homeRoute: (context) => const HomePage(),
+          MyRoutes.roughRoute: (context) => const RoughPage(),
+
           // MyRoutes.loginRoute: (context) {
           //   return const Text('Hello');
           // },
