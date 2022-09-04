@@ -1,40 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iMaz/pages/constants.dart';
+import 'package:iMaz/pages/customAppBar.dart';
 import 'package:iMaz/pages/home.dart';
+import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/pages/login.dart';
 import 'package:iMaz/pages/rough.dart';
+import 'package:iMaz/pages/wallet.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: ((context, orientation, deviceType) {
       return MaterialApp(
-        title: 'iMaz',
+        title: appName,
         themeMode: ThemeMode.system,
         darkTheme: ThemeData(
           brightness: Brightness.dark,
-          primarySwatch: Colors.purple,
+          primarySwatch: Colors.teal,
           fontFamily: GoogleFonts.raleway().fontFamily,
-          // primaryColor: Colors.white,
         ),
         theme: ThemeData(
-          primarySwatch: Colors.purple,
+          primarySwatch: Colors.teal,
           fontFamily: GoogleFonts.raleway().fontFamily,
           // primaryTextTheme: GoogleFonts.ralewayTextTheme(),
         ),
         initialRoute: MyRoutes.loginRoute,
         routes: {
-          MyRoutes.loginRoute: (context) => const LoginPage(),
-          MyRoutes.homeRoute: (context) => const HomePage(),
-          MyRoutes.roughRoute: (context) => const RoughPage(),
+          MyRoutes.loginRoute: (context) => LoginPage(),
+          MyRoutes.homeRoute: (context) => HomePage(),
+          MyRoutes.roughRoute: (context) => RoughPage(),
+          MyRoutes.listRoute: (context) => ListPage(),
+          MyRoutes.appRoute: (context) => CustomAppBar(),
+          MyRoutes.walletRoute: (context) => WalletPage(),
 
           // MyRoutes.loginRoute: (context) {
           //   return const Text('Hello');

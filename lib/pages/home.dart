@@ -1,70 +1,82 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:iMaz/pages/customAppBar.dart';
 import 'package:iMaz/pages/dashboard.dart';
-import 'package:iMaz/pages/login.dart';
+import 'package:iMaz/pages/list.dart';
+import 'package:iMaz/pages/constants.dart';
 import 'package:iMaz/pages/rough.dart';
-import 'package:iMaz/routes/routes.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:sizer/sizer.dart';
+import 'package:iMaz/pages/wallet.dart';
+import 'constants.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int isSelected = 1;
-  String devName = 'Yogesh Giri';
-  int age = 20;
-  String appName = 'iMaz';
-  int navIndex = 0;
-  var pageList = [DashboardPage(), LoginPage(), RoughPage(), DashboardPage()];
-  var pageColor = [
-    Color.fromARGB(255, 232, 170, 243),
-    Colors.white,
-    Colors.greenAccent,
-    Colors.lightBlueAccent,
-  ];
+  int navIndex = 2;
 
-  add({required int a, int b = 2}) {
-    return a + b;
-  }
+  var pageList = [
+    ListPage(),
+    Center(child: Text('Page is under development')),
+    DashboardPage(),
+    WalletPage(),
+    RoughPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    int maxAge = add(a: age);
-    var secondaryFont = GoogleFonts.poppins().fontFamily;
-
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDark = (brightness == Brightness.dark) ? 1 : 0;
     var scaffold = Scaffold(
-      backgroundColor: pageColor[navIndex],
+      backgroundColor: pureWhite,
       body: pageList[navIndex],
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.purple,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.shade500, spreadRadius: .2, blurRadius: 5)
-            ]),
-        child: IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, MyRoutes.loginRoute);
-          },
-          icon: const Icon(Icons.logout),
-          color: Colors.white,
-        ),
-      ),
+      // floatingActionButton: Container(
+      //   decoration: BoxDecoration(
+      //       shape: BoxShape.circle,
+      //       color: primaryColor,
+      //       boxShadow: [
+      //         BoxShadow(WW
+      //             color: Colors.grey.shade500, spreadRadius: .2, blurRadius: 5)
+      //       ]),
+      //   child: IconButton(
+      //     onPressed: () {
+      //       Navigator.pushNamed(context, MyRoutes.loginRoute);
+      //     },
+      //     icon: const Icon(Icons.logout),
+      //     color: pureWhite,
+      //   ),
+      // ),
       bottomNavigationBar: CurvedNavigationBar(
         index: navIndex,
         backgroundColor: Colors.transparent,
+        color: isDark == 1 ? pureBlack : primaryColor,
         items: const [
-          Icon(Icons.dashboard_outlined, size: 30),
-          Icon(Icons.my_library_books_outlined, size: 30),
-          Icon(Icons.currency_rupee_outlined, size: 30),
-          Icon(Icons.account_circle_outlined, size: 30),
+          Icon(
+            Icons.upload_file_outlined,
+            size: 30,
+            color: pureWhite,
+          ),
+          Icon(
+            Icons.my_library_books_outlined,
+            size: 30,
+            color: pureWhite,
+          ),
+          Icon(
+            Icons.dashboard_outlined,
+            size: 30,
+            color: pureWhite,
+          ),
+          Icon(
+            Icons.account_balance_wallet,
+            size: 30,
+            color: pureWhite,
+          ),
+          Icon(
+            Icons.account_circle_outlined,
+            size: 30,
+            color: pureWhite,
+          ),
         ],
         onTap: (index) {
           setState(() {

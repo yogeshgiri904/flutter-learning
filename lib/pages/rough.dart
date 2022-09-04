@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iMaz/pages/customAppBar.dart';
 import 'package:iMaz/routes/routes.dart';
+import 'package:sizer/sizer.dart';
 
 class RoughPage extends StatefulWidget {
   const RoughPage({Key? key}) : super(key: key);
@@ -22,7 +23,17 @@ class _RoughPageState extends State<RoughPage> {
       body: Center(
           child: Column(
         children: [
-          Image.asset('lib/assets/img/Me.jpeg'),
+          CustomAppBar(),
+          SizedBox(
+            height: 8.h,
+          ),
+          Container(
+            width: 70.w,
+            decoration: BoxDecoration(shape: BoxShape.circle),
+            child: Image.asset(
+              'lib/assets/img/Me.jpeg',
+            ),
+          ),
           Text(
             "Welcome in $appName",
             style: const TextStyle(

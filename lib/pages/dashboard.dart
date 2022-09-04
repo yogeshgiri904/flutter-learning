@@ -1,9 +1,6 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:iMaz/pages/login.dart';
-import 'package:iMaz/pages/rough.dart';
-import 'package:iMaz/routes/routes.dart';
+import 'package:iMaz/pages/constants.dart';
+import 'package:iMaz/pages/customAppBar.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,107 +12,135 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  int isSelected = 1;
-  String devName = 'Yogesh Giri';
-  int age = 20;
-  String appName = 'iMaz';
-
-  add({required int a, int b = 2}) {
-    return a + b;
-  }
+  final color = secondaryFont;
 
   @override
   Widget build(BuildContext context) {
-    int maxAge = add(a: age);
-    var secondaryFont = GoogleFonts.poppins().fontFamily;
-
-    var scaffold = Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Center(
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDark = (brightness == Brightness.dark) ? 1 : 0;
+    return SingleChildScrollView(
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        CustomAppBar(),
+        Container(
+          color: secondaryColor,
+          width: 100.w,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                width: 100.w,
-                height: 8.h,
-                // color: Colors.deepOrange,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.h),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Image.asset(
-                          'lib/assets/img/menu.png',
-                          width: 25,
-                        )),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('Yogesh Giri',
-                            style: TextStyle(
-                              fontFamily: secondaryFont,
-                            )),
-                        Row(
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(
-                              Icons.person_pin_circle_sharp,
-                              color: Colors.deepPurple,
-                            ),
                             Text(
-                              'Awagarh',
+                              'Hii, Yogesh Giri',
                               style: TextStyle(
-                                color: Colors.deepPurple,
                                 fontFamily: secondaryFont,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 5.w,
                               ),
                             ),
+                            const Text('Good morning !'),
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                    Image.asset(
-                      'lib/assets/img/profile.png',
-                      width: 40,
-                    )
+                    SizedBox(
+                      height: .5.h,
+                    ),
+                    Positioned(
+                      child: Column(
+                        children: [
+                          Card(
+                            elevation: 3,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(1.w),
+                              child: const TextField(
+                                decoration: InputDecoration(
+                                    hintText: 'Search',
+                                    suffixIcon: Icon(Icons.search_sharp),
+                                    enabledBorder: InputBorder.none,
+                                    contentPadding:
+                                        EdgeInsets.only(top: 15, left: 20),
+                                    focusedBorder: InputBorder.none),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-              // Container(),
+            ],
+          ),
+        ),
+        Container(
+          height: 60.h,
+          child: ListView(
+            children: [
               Card(
-                elevation: 5,
+                elevation: 3,
+                borderOnForeground: false,
                 child: Container(
                     width: 92.5.w,
                     height: 30.h,
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20)),
+                      color: isDark == 1 ? pureBlack : pureWhite,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     child: Center(
                         child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'lib/assets/img/heart1.png',
-                          width: 35.w,
+                        Icon(
+                          Icons.qr_code_2,
+                          size: 40.w,
+                        ),
+                        SizedBox(
+                          height: 2.h,
                         ),
                         const Text(
-                          'Hello, Yogesh Giri',
-                          // style: TextStyle(fontWeight: FontWeight.bold),
-                        )
+                          'UPI ID - yogeshgiri904',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: defaultColor,
+                          ),
+                        ),
+                        const Text(
+                          'ICICI Bank',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
                       ],
                     ))),
               ),
               Card(
-                elevation: 5,
+                elevation: 3,
                 child: Container(
                     width: 92.5.w,
                     height: 20.h,
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDark == 1 ? pureBlack : pureWhite,
                         borderRadius: BorderRadius.circular(20)),
                     child: Center(
                       child: Row(
@@ -167,7 +192,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      '86 %',
+                                      '66 %',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontFamily: secondaryFont),
@@ -175,9 +200,10 @@ class _DashboardPageState extends State<DashboardPage> {
                                     LinearPercentIndicator(
                                       width: 20.h,
                                       lineHeight: 14.0,
-                                      percent: 0.86,
-                                      backgroundColor: Colors.grey,
-                                      progressColor: Colors.purple,
+                                      percent: 0.66,
+                                      backgroundColor:
+                                          Color.fromARGB(255, 189, 187, 187),
+                                      progressColor: Colors.blueGrey,
                                     ),
                                   ],
                                 ),
@@ -188,74 +214,78 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                     )),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
                 children: [
-                  Card(
-                    elevation: 5,
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        width: 45.w,
-                        height: 20.h,
-                        child: Center(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'lib/assets/img/discussion.png',
-                                  width: 15.w,
-                                ),
-                                Text(
-                                  'Exams',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: secondaryFont),
-                                ),
-                                const Text(
-                                  'Find your exam',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                              ]),
-                        )),
-                  ),
-                  Card(
-                    elevation: 5,
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        width: 45.w,
-                        height: 20.h,
-                        child: Center(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'lib/assets/img/working-hours.png',
-                                  width: 15.w,
-                                ),
-                                Text(
-                                  'Lectures',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: secondaryFont),
-                                ),
-                                const Text(
-                                  'Find your lectures',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                              ]),
-                        )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Card(
+                        elevation: 3,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: isDark == 1 ? pureBlack : pureWhite,
+                                borderRadius: BorderRadius.circular(20)),
+                            width: 45.w,
+                            height: 20.h,
+                            child: Center(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/img/discussion.png',
+                                      width: 15.w,
+                                    ),
+                                    Text(
+                                      'Exams',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: secondaryFont),
+                                    ),
+                                    const Text(
+                                      'Find your exam',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blueGrey,
+                                      ),
+                                    ),
+                                  ]),
+                            )),
+                      ),
+                      Card(
+                        elevation: 3,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: isDark == 1 ? pureBlack : pureWhite,
+                                borderRadius: BorderRadius.circular(20)),
+                            width: 45.w,
+                            height: 20.h,
+                            child: Center(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'lib/assets/img/working-hours.png',
+                                      width: 15.w,
+                                    ),
+                                    Text(
+                                      'Lectures',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: secondaryFont),
+                                    ),
+                                    const Text(
+                                      'Find your lectures',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blueGrey,
+                                      ),
+                                    ),
+                                  ]),
+                            )),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -264,9 +294,8 @@ class _DashboardPageState extends State<DashboardPage> {
               )
             ],
           ),
-        ),
-      ),
+        )
+      ]),
     );
-    return scaffold;
   }
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:sizer/sizer.dart';
+import 'package:iMaz/pages/constants.dart';
 
 class LoginPage extends StatefulWidget {
+  static const devName = 'Yogesh Giri';
+
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -12,14 +15,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  String devName = 'Yogesh Giri';
+  static const devName = 'Yogesh Giri';
 
   @override
   Widget build(BuildContext context) {
     final brightness = MediaQuery.of(context).platformBrightness;
     final isDark = (brightness == Brightness.dark) ? 1 : 0;
+
     var scaffold = Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark == 1 ? pureBlack : pureWhite,
         body: Center(
             child: SingleChildScrollView(
           child: Column(
@@ -83,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       style: TextButton.styleFrom(
-                          backgroundColor: Colors.purple,
+                          backgroundColor: primaryColor,
                           minimumSize: Size(80.w, 45)),
                       child: const Text(
                         "Login",
@@ -91,22 +95,24 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       onPressed: () {
-                        if (passwordController.text == '' ||
-                            usernameController.text == '') {
-                          const emptySnackBar = SnackBar(
-                              content:
-                                  Text('Username or Password cannot be Empty'));
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(emptySnackBar);
-                        } else if (usernameController.text == 'vinod' &&
-                            passwordController.text == '123') {
-                          Navigator.pushNamed(context, MyRoutes.homeRoute);
-                        } else {
-                          const invalidSnackBar =
-                              SnackBar(content: Text('Invalid Credentials'));
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(invalidSnackBar);
-                        }
+                        Navigator.pushNamed(context, MyRoutes.homeRoute);
+
+                        // if (passwordController.text == '' ||
+                        //     usernameController.text == '') {
+                        //   const emptySnackBar = SnackBar(
+                        //       content:
+                        //           Text('Username or Password cannot be Empty'));
+                        //   ScaffoldMessenger.of(context)
+                        //       .showSnackBar(emptySnackBar);
+                        // } else if (usernameController.text == 'vinod' &&
+                        //     passwordController.text == '123') {
+                        //   Navigator.pushNamed(context, MyRoutes.homeRoute);
+                        // } else {
+                        //   const invalidSnackBar =
+                        //       SnackBar(content: Text('Invalid Credentials'));
+                        //   ScaffoldMessenger.of(context)
+                        //       .showSnackBar(invalidSnackBar);
+                        // }
                       },
                     )
                   ],
@@ -115,9 +121,9 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 3.h,
               ),
-              Text(
+              const Text(
                 'Created by $devName ❤️',
-                style: const TextStyle(
+                style: TextStyle(
                   height: 8,
                 ),
               ),
