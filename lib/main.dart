@@ -6,6 +6,7 @@ import 'package:iMaz/pages/home.dart';
 import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/pages/login.dart';
 import 'package:iMaz/pages/rough.dart';
+import 'package:iMaz/pages/splash.dart';
 import 'package:iMaz/pages/wallet.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:sizer/sizer.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.raleway().fontFamily,
           // primaryTextTheme: GoogleFonts.ralewayTextTheme(),
         ),
-        initialRoute: MyRoutes.loginRoute,
+        initialRoute: MyRoutes.splashRoute,
         routes: {
           MyRoutes.loginRoute: (context) => LoginPage(),
           MyRoutes.homeRoute: (context) => HomePage(),
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
           MyRoutes.listRoute: (context) => ListPage(),
           MyRoutes.appRoute: (context) => CustomAppBar(),
           MyRoutes.walletRoute: (context) => WalletPage(),
+          MyRoutes.splashRoute: (context) => SplashPage(),
 
           // MyRoutes.loginRoute: (context) {
           //   return const Text('Hello');

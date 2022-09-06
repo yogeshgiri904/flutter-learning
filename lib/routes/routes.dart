@@ -5,4 +5,5 @@ class MyRoutes {
   static String listRoute = '/list';
   static String appRoute = '/customAppBar';
   static String walletRoute = '/wallet';
+  static String splashRoute = '/splash';
 }

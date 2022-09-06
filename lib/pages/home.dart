@@ -18,7 +18,11 @@ class _HomePageState extends State<HomePage> {
 
   var pageList = [
     ListPage(),
-    Center(child: Text('Page is under development')),
+    Center(
+        child: Text(
+      'Page is under development',
+      style: TextStyle(color: Colors.red),
+    )),
     DashboardPage(),
     WalletPage(),
     RoughPage(),

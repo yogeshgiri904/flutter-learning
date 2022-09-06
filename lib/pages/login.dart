@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  bool securedText = true;
   static const devName = 'Yogesh Giri';
 
   @override
@@ -73,9 +74,18 @@ class _LoginPageState extends State<LoginPage> {
                           vertical: 3.0, horizontal: 10.0),
                       child: TextFormField(
                         controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
+                        obscureText: securedText,
+                        decoration: InputDecoration(
                           icon: Icon(Icons.lock_outline_sharp),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  securedText = securedText ? false : true;
+                                });
+                              },
+                              icon: Icon(securedText
+                                  ? Icons.remove_red_eye_outlined
+                                  : Icons.remove_red_eye)),
                           hintText: 'xxxxxxxx', // placeholder
                           labelText: 'Password', // label
                           enabledBorder: InputBorder.none,

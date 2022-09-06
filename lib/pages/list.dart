@@ -159,7 +159,7 @@ customCardCircle(
         children: [
           Container(
             padding: EdgeInsets.all(4.w),
-            width: 10.h,
+            width: 9.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: secondaryColor,
@@ -173,7 +173,9 @@ customCardCircle(
             style: TextStyle(
                 fontFamily: secondaryFont,
                 fontWeight: FontWeight.bold,
-                fontSize: 2.3.w),
+                fontSize: 2.3.w,
+                height: .3.h,
+                color: Colors.black),
           ),
         ],
       ),
