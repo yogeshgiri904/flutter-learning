@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iMaz/pages/basicNav.dart';
 import 'package:iMaz/pages/constants.dart';
-import 'package:iMaz/pages/customAppBar.dart';
+import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:iMaz/pages/home.dart';
 import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/pages/login.dart';
 import 'package:iMaz/pages/rough.dart';
 import 'package:iMaz/pages/splash.dart';
+import 'package:iMaz/pages/userData.dart';
 import 'package:iMaz/pages/wallet.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:sizer/sizer.dart';
@@ -38,9 +40,12 @@ class MyApp extends StatelessWidget {
           MyRoutes.homeRoute: (context) => HomePage(),
           MyRoutes.roughRoute: (context) => RoughPage(),
           MyRoutes.listRoute: (context) => ListPage(),
-          MyRoutes.appRoute: (context) => CustomAppBar(),
+          MyRoutes.appRoute: (context) =>
+              CustomAppBar(name: "iMaz", place: "Agra", isSubPage: false),
           MyRoutes.walletRoute: (context) => WalletPage(),
           MyRoutes.splashRoute: (context) => SplashPage(),
+          MyRoutes.userDataRoute: (context) => UserData(),
+          MyRoutes.basicNavRoute: (context) => BasicNav(),
 
           // MyRoutes.loginRoute: (context) {
           //   return const Text('Hello');

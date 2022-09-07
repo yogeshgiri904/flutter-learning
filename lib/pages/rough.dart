@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iMaz/pages/customAppBar.dart';
+import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:sizer/sizer.dart';
 
@@ -23,7 +23,11 @@ class _RoughPageState extends State<RoughPage> {
       body: Center(
           child: Column(
         children: [
-          CustomAppBar(),
+          CustomAppBar(
+            name: "iMaz",
+            place: "Agra",
+            isSubPage: false,
+          ),
           SizedBox(
             height: 8.h,
           ),

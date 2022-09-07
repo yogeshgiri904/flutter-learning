@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iMaz/pages/constants.dart';
-import 'package:iMaz/pages/customAppBar.dart';
+import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,7 +14,7 @@ class Student {
   final String image;
   final String title;
   final String day;
-  final String date;
+  final bool date;
 
   Student(
       {required this.image,
@@ -24,36 +24,36 @@ class Student {
 }
 
 class _ListPageState extends State<ListPage> {
-  var itemList = [
+  List itemList = [
     Student(
-        image: "lib/assets/img/3d.png",
+        image: "lib/assets/img/woman-1.png",
         title: "Yogesh Giri",
-        date: "Online",
+        date: false,
         day: "Awagarh"),
     Student(
-        image: "lib/assets/img/3d.png",
+        image: "lib/assets/img/girl-1.png",
         title: "Ashish Kumar",
-        date: "Online",
+        date: true,
         day: "Etawah"),
     Student(
-        image: "lib/assets/img/3d.png",
+        image: "lib/assets/img/girl.png",
         title: "Pankaj Jangda",
-        date: "Online",
+        date: false,
         day: "Haryana"),
     Student(
-        image: "lib/assets/img/3d.png",
+        image: "lib/assets/img/woman.png",
         title: "Arnest Paul",
-        date: "Online",
+        date: false,
         day: "Cannada"),
     Student(
-        image: "lib/assets/img/3d.png",
+        image: "lib/assets/img/man.png",
         title: "Bhuvnesh Giri",
-        date: "Online",
+        date: true,
         day: "Etah"),
     Student(
-        image: "lib/assets/img/3d.png",
+        image: "lib/assets/img/girl-1.png",
         title: "Ajay Dayal",
-        date: "Online",
+        date: false,
         day: "Patna"),
   ];
   @override
@@ -63,7 +63,7 @@ class _ListPageState extends State<ListPage> {
     return Container(
       child: Column(
         children: [
-          CustomAppBar(),
+          CustomAppBar(name: appName, place: "Agra", isSubPage: false),
           SizedBox(
             height: 1.h,
           ),
@@ -72,11 +72,13 @@ class _ListPageState extends State<ListPage> {
             child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return customCardCircle(
-                    image: itemList[index].image,
-                    day: itemList[index].day,
-                    date: itemList[index].date,
-                    title: itemList[index].title,
+                  return GestureDetector(
+                    onLongPress: () {
+                      // print('object');
+                      Navigator.pushNamed(context, '/userData',
+                          arguments: {'data': itemList[index]});
+                    },
+                    child: customCardCircle(data: itemList[index]),
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -89,11 +91,13 @@ class _ListPageState extends State<ListPage> {
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
-                return customCard(
-                  image: itemList[index].image,
-                  day: itemList[index].day,
-                  date: itemList[index].date,
-                  title: itemList[index].title,
+                return GestureDetector(
+                  onTap: () {
+                    // print('object');
+                    Navigator.pushNamed(context, '/userData',
+                        arguments: {'data': itemList[index]});
+                  },
+                  child: customCard(data: itemList[index]),
                 );
               },
               itemCount: itemList.length,
@@ -105,53 +109,36 @@ class _ListPageState extends State<ListPage> {
   }
 }
 
-customCard({required image, required day, required date, required title}) {
+customCard({required data}) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 0, horizontal: 3.w),
     child: Card(
       elevation: 1,
       child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListTile(
-            leading: Image.asset(
-              image,
-              width: 10.w,
-            ),
-            title: Text(
-              title,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontFamily: secondaryFont),
-            ),
-            subtitle: Text(day),
-            trailing: Text(
-              date,
-              style: TextStyle(color: Colors.green),
-            ),
-            style: ListTileStyle.drawer,
-          )
-          // Column(
-          //   children: [
-          //     Text(
-          //       title,
-          //       style: TextStyle(
-          //           fontFamily: secondaryFont,
-          //           fontWeight: FontWeight.bold,
-          //           fontSize: 4.w),
-          //     ),
-          //     Row(
-          //       children: [Text('$day - '), Text(date)],
-          //     )
-          //   ],
-          // )
-          // ],
-          // ),
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          leading: Image.asset(
+            data.image,
+            width: 10.w,
           ),
+          title: Text(
+            data.title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: secondaryFont),
+          ),
+          subtitle: Text(data.day),
+          trailing: Text(
+            data.date ? 'Offline' : 'Online',
+            style: TextStyle(color: data.date ? Colors.green : Colors.red),
+          ),
+          style: ListTileStyle.drawer,
+        ),
+      ),
     ),
   );
 }
 
-customCardCircle(
-    {required image, required day, required date, required title}) {
+customCardCircle({required data}) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: .2.h, horizontal: 3.w),
     child: Container(
@@ -162,14 +149,16 @@ customCardCircle(
             width: 9.h,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: secondaryColor,
+              color: data.date
+                  ? Color.fromARGB(103, 255, 193, 7)
+                  : Color.fromARGB(147, 178, 255, 89),
             ),
             child: Image.asset(
-              image,
+              data.image,
             ),
           ),
           Text(
-            title,
+            data.title,
             style: TextStyle(
                 fontFamily: secondaryFont,
                 fontWeight: FontWeight.bold,

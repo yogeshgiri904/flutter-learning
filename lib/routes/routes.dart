@@ -6,4 +6,6 @@ class MyRoutes {
   static String appRoute = '/customAppBar';
   static String walletRoute = '/wallet';
   static String splashRoute = '/splash';
+  static String userDataRoute = '/userData';
+  static String basicNavRoute = '/basicNav';
 }

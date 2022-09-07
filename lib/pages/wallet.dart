@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iMaz/pages/constants.dart';
-import 'package:iMaz/pages/customAppBar.dart';
+import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
@@ -46,50 +46,70 @@ class _WalletPageState extends State<WalletPage> {
   Widget build(BuildContext context) {
     final brightness = MediaQuery.of(context).platformBrightness;
     final isDark = (brightness == Brightness.dark) ? 1 : 0;
-    return Container(
+    return SingleChildScrollView(
+        child: Container(
       child: Column(
         children: [
-          CustomAppBar(),
-          SizedBox(
-            height: 1.h,
+          CustomAppBar(
+            name: "iMaz",
+            place: "Agra",
+            isSubPage: false,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
-            child: Container(
-              height: 25.h,
-              child: Card(
-                  elevation: 3,
-                  color: secondaryColor,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text('Yogesh Giri'),
-                        subtitle: Text('ICICI Bank'),
-                        trailing: Icon(
-                          Icons.upgrade,
-                          size: 10.w,
-                        ),
-                      ),
-                    ],
-                  )),
+          Container(
+            height: 25.h,
+            width: 100.w,
+            color: Colors.blueGrey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 6.h,
+                ),
+                Text(
+                  'Total Balance',
+                  style: TextStyle(
+                    color: pureWhite,
+                  ),
+                ),
+                TextButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.currency_rupee_sharp,
+                      color: pureWhite,
+                      size: 5.w,
+                    ),
+                    label: Text(
+                      ' 78,497.87',
+                      style: TextStyle(
+                          fontFamily: secondaryFont,
+                          color: pureWhite,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 8.w),
+                    ))
+              ],
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return customCard(
-                  image: itemList[index].image,
-                  day: itemList[index].day,
-                  date: itemList[index].date,
-                  title: itemList[index].title,
-                );
-              },
-              itemCount: itemList.length,
+          Container(
+            height: 65.h,
+            child: Transform.translate(
+              offset: Offset(0, -10.h),
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return customCard(
+                    image: itemList[index].image,
+                    day: itemList[index].day,
+                    date: itemList[index].date,
+                    title: itemList[index].title,
+                  );
+                },
+                itemCount: itemList.length,
+              ),
             ),
-          )
+          ),
         ],
       ),
-    );
+    ));
   }
 }
 

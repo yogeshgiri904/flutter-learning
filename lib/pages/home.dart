@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:iMaz/pages/customAppBar.dart';
+import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:iMaz/pages/dashboard.dart';
 import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/pages/constants.dart';

@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iMaz/pages/constants.dart';
-import 'package:iMaz/pages/customAppBar.dart';
+import 'package:iMaz/Widgets/customAppBar.dart';
+import 'package:iMaz/Widgets/CustomCardView.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 import 'package:action_slider/action_slider.dart';
@@ -20,7 +20,7 @@ class _DashboardPageState extends State<DashboardPage> {
     'SBI',
     'Canera Bank',
     'PNB',
-    'IndusInd Bank'
+    'IndusInd Bank',
   ];
 
   var checkedOpBtns;
@@ -34,37 +34,77 @@ class _DashboardPageState extends State<DashboardPage> {
     return SingleChildScrollView(
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        CustomAppBar(),
+        CustomAppBar(
+          name: "iMaz",
+          place: "Agra",
+          isSubPage: false,
+        ),
         welcomePage(),
-        Padding(
-          padding: EdgeInsets.only(left: 2.w),
-          child: Container(
-            height: 8.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      checkedOpBtns = index;
-                    });
-                  },
-                  child: customLightBtn(
-                      borderColor: Colors.white,
-                      color: checkedOpBtns == index
-                          ? Colors.amber
-                          : Color.fromARGB(63, 155, 39, 176),
-                      text: oprations[index],
-                      height: 1.h,
-                      // icon: Icon(Icons.add),
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
-                      padding: EdgeInsets.symmetric(horizontal: 7.w)),
-                );
-              },
-              itemCount: oprations.length,
+        Stack(
+          children: [
+            Center(
+              child: Transform.translate(
+                offset: Offset(0.0, -4.h),
+                child: Container(
+                  height: 8.h,
+                  width: 92.w,
+                  child: Card(
+                    elevation: 3,
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(1.w),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            hintText: 'Search',
+                            hintStyle: TextStyle(color: primaryColor),
+                            suffixIcon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.search_sharp),
+                              color: primaryColor,
+                            ),
+                            enabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(top: 14, left: 20),
+                            focusedBorder: InputBorder.none),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.only(left: 2.w, top: 4.h),
+              child: Container(
+                height: 8.h,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          checkedOpBtns = index;
+                        });
+                      },
+                      child: customLightBtn(
+                          borderColor: Colors.white,
+                          color: checkedOpBtns == index
+                              ? Colors.amber
+                              : Color.fromARGB(63, 155, 39, 176),
+                          text: oprations[index],
+                          height: 1.h,
+                          // icon: Icon(Icons.add),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 1.w, vertical: 1.h),
+                          padding: EdgeInsets.symmetric(horizontal: 7.w)),
+                    );
+                  },
+                  itemCount: oprations.length,
+                ),
+              ),
+            ),
+          ],
         ),
         Container(
           height: 55.h,
@@ -73,7 +113,7 @@ class _DashboardPageState extends State<DashboardPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Container(
-                  child: customCardView(
+                  child: CustomCardView(
                       height: 30.h,
                       weight: 50.w,
                       icon: Icon(
@@ -152,15 +192,6 @@ class _DashboardPageState extends State<DashboardPage> {
                               : ScaffoldMessenger.of(context)
                                   .showSnackBar(invalidSnackBar);
 
-                          // BottomSheet(onClosing: () {
-                          //   setState(() {
-                          //     moneySend = 1;
-                          //   });
-                          // }, builder: (context) {
-                          //   return Container(
-                          //     child: Text('send'),
-                          //   );
-                          // });
                           setState(() {
                             moneySend = moneySend == 0 ? 1 : 0;
                           });
@@ -179,28 +210,52 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               Column(
                 children: [
-                  precentBlock(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/basicNav', arguments: {
+                        'data': {'title': 'Student Rank', 'day': '(out of 200)'}
+                      });
+                    },
+                    child: precentBlock(),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      customCardView(
-                          height: 20.h,
-                          weight: 44.w,
-                          image: Image.asset(
-                            'lib/assets/img/discussion.png',
-                            width: 45.w / 3,
-                          ),
-                          primaryText: 'Exams',
-                          secondaryText: 'Gand Fad Exam'),
-                      customCardView(
-                          height: 20.h,
-                          weight: 44.w,
-                          icon: Icon(
-                            Icons.picture_as_pdf,
-                            size: 14.w,
-                          ),
-                          primaryText: 'Downlaod',
-                          secondaryText: 'Study Material'),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/basicNav', arguments: {
+                            'data': {'title': 'Exams', 'day': 'Gand Fad Exam'}
+                          });
+                        },
+                        child: CustomCardView(
+                            height: 20.h,
+                            weight: 44.w,
+                            image: Image.asset(
+                              'lib/assets/img/discussion.png',
+                              width: 45.w / 3,
+                            ),
+                            primaryText: 'Exams',
+                            secondaryText: 'Gand Fad Exam'),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/basicNav', arguments: {
+                            'data': {
+                              'title': 'Downlaod',
+                              'day': 'Study Material'
+                            }
+                          });
+                        },
+                        child: CustomCardView(
+                            height: 20.h,
+                            weight: 44.w,
+                            icon: Icon(
+                              Icons.picture_as_pdf,
+                              size: 14.w,
+                            ),
+                            primaryText: 'Downlaod',
+                            secondaryText: 'Study Material'),
+                      ),
                     ],
                   )
                 ],
@@ -218,8 +273,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
 customSliderBtn() {
   return ActionSlider.standard(
-    backgroundBorderRadius: BorderRadius.circular(10),
-    foregroundBorderRadius: BorderRadius.circular(10),
+    backgroundBorderRadius: BorderRadius.circular(50),
+    foregroundBorderRadius: BorderRadius.circular(50),
     toggleColor: Color.fromARGB(192, 0, 150, 135),
     backgroundColor: Color.fromARGB(139, 105, 240, 175),
     child: const Text('Slide to pay'),
@@ -228,84 +283,6 @@ customSliderBtn() {
       await Future.delayed(const Duration(seconds: 3));
       controller.success(); //starts success animation
     },
-  );
-}
-
-customCardView({
-  required double height,
-  required double weight,
-  Widget image = const SizedBox(
-    height: 0,
-  ),
-  Widget icon = const SizedBox(
-    height: 0,
-  ),
-  primaryText,
-  color,
-  secondaryText,
-  double progressBar = 0,
-  progressBarWidth,
-  progressBarValue,
-  Widget button = const SizedBox(
-    height: 0,
-  ),
-}) {
-  return Card(
-    elevation: 3,
-    child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-        width: weight,
-        height: height,
-        child: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            image,
-            icon,
-            SizedBox(
-              height: height / 20,
-            ),
-            Text(
-              primaryText,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: secondaryFont,
-                fontSize: weight / 12,
-              ),
-            ),
-            Text(
-              secondaryText,
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: weight / 15,
-                color: Colors.blueGrey,
-              ),
-            ),
-            progressBar != 0
-                ? Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '$progressBar %',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: secondaryFont),
-                        ),
-                        LinearPercentIndicator(
-                          width: progressBarWidth,
-                          lineHeight: 14.0,
-                          percent: progressBar / 100,
-                          backgroundColor: Color.fromARGB(255, 189, 187, 187),
-                          progressColor: Colors.blueGrey,
-                        ),
-                      ],
-                    ),
-                  )
-                : const SizedBox(
-                    height: 0,
-                  ),
-            button
-          ]),
-        )),
   );
 }
 
@@ -355,17 +332,19 @@ welcomePage() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 2.h,
+                height: 1.h,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5.w),
                 child: Container(
+                  width: 100.w,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Hii, Yogesh Giri',
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: secondaryFont,
                           fontWeight: FontWeight.bold,
@@ -378,37 +357,7 @@ welcomePage() {
                 ),
               ),
               SizedBox(
-                height: .5.h,
-              ),
-              Positioned(
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 3,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(1.w),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintText: 'Search',
-                              hintStyle: TextStyle(color: primaryColor),
-                              suffixIcon: IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.search_sharp),
-                                color: primaryColor,
-                              ),
-                              enabledBorder: InputBorder.none,
-                              contentPadding:
-                                  EdgeInsets.only(top: 15, left: 20),
-                              focusedBorder: InputBorder.none),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                height: 4.h,
               ),
             ],
           ),
