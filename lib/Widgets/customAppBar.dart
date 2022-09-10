@@ -51,10 +51,13 @@ class CustomAppBar extends StatelessWidget {
                                   fontFamily: secondaryFont, fontSize: 3.8.w)),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/list',
-                              );
+                              Navigator.pushNamed(context, '/basicNav',
+                                  arguments: {
+                                    'data': {
+                                      'title': 'Change Location',
+                                      'day': 'Current Location'
+                                    }
+                                  });
                             },
                             child: Row(
                               children: [

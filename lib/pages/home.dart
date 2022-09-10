@@ -4,6 +4,7 @@ import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:iMaz/pages/dashboard.dart';
 import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/pages/constants.dart';
+import 'package:iMaz/pages/report.dart';
 import 'package:iMaz/pages/rough.dart';
 import 'package:iMaz/pages/wallet.dart';
 import 'constants.dart';
@@ -18,11 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   var pageList = [
     ListPage(),
-    Center(
-        child: Text(
-      'Page is under development',
-      style: TextStyle(color: Colors.red),
-    )),
+    Report(),
     DashboardPage(),
     WalletPage(),
     RoughPage(),

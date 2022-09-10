@@ -6,6 +6,7 @@ import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:iMaz/pages/home.dart';
 import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/pages/login.dart';
+import 'package:iMaz/pages/report.dart';
 import 'package:iMaz/pages/rough.dart';
 import 'package:iMaz/pages/splash.dart';
 import 'package:iMaz/pages/userData.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
           MyRoutes.splashRoute: (context) => SplashPage(),
           MyRoutes.userDataRoute: (context) => UserData(),
           MyRoutes.basicNavRoute: (context) => BasicNav(),
+          MyRoutes.reportRoute: (context) => Report(),
 
           // MyRoutes.loginRoute: (context) {
           //   return const Text('Hello');
