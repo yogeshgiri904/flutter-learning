@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           setState(() {
             navIndex = index;
           });
-          //Handle button tap
+          // Handle button tap
         },
       ),
     );

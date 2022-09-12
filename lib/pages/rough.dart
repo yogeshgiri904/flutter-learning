@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:iMaz/Widgets/customAppBar.dart';
+import 'package:iMaz/models/users.dart';
 import 'package:iMaz/routes/routes.dart';
+import 'package:http/http.dart' as http;
 import 'package:sizer/sizer.dart';
 
 class RoughPage extends StatefulWidget {
@@ -16,7 +20,27 @@ class _RoughPageState extends State<RoughPage> {
   int age = 20;
   String appName = 'iMaz';
 
+  List? _userDetails;
+
+  Future<void> getUserDetails() async {
+    var url = Uri.parse('http://13.126.90.63/auth/login/');
+    var response = await http.post(url,
+        body: {"email": "yogeshgiri904@gmail.com", "password": "9690484308"});
+    // print('123=${response.body}');
+
+    List userDetails = userFromJson(response.body);
+    print(userDetails);
+    // setState(() {
+    //   _userDetails = userDetails;
+    // });
+  }
+
   @override
+  void initState() {
+    super.initState();
+    getUserDetails();
+  }
+
   Widget build(BuildContext context) {
     var scaffold = Scaffold(
       backgroundColor: Colors.transparent,
@@ -32,10 +56,11 @@ class _RoughPageState extends State<RoughPage> {
             height: 8.h,
           ),
           Container(
-            width: 70.w,
+            width: 20.w,
             decoration: BoxDecoration(shape: BoxShape.circle),
             child: Image.asset(
               'lib/assets/img/Me.jpeg',
+              fit: BoxFit.cover,
             ),
           ),
           Text(
@@ -64,7 +89,16 @@ class _RoughPageState extends State<RoughPage> {
             onPressed: () {
               Navigator.pushNamed(context, MyRoutes.loginRoute);
             },
-          )
+          ),
+          // Container(
+          //     child: _userDetails == null
+          //         ? Text('Loading...')
+          //         : ListView.builder(
+          //             itemBuilder: ((context, index) {
+          //               return Text('data');
+          //             }),
+          //             itemCount: 10,
+          //           ))
         ],
       )),
     );
