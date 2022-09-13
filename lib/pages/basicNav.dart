@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iMaz/Widgets/customAppBar.dart';
-import 'package:iMaz/Widgets/customCardView.dart';
+import 'package:iMaz/Widgets/CustomCard.dart';
 import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';

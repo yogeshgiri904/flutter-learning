@@ -134,8 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                             enabledBorder: InputBorder.none,
                           ),
                           validator: (value) {
-                            // print('hlw');
-
                             if (value == '' || value!.isEmpty) {
                               passVal = 'Password cannot be empty.';
                             }
@@ -149,17 +147,11 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextButton.styleFrom(
                             backgroundColor: primaryColor,
                             minimumSize: Size(80.w, 45)),
-                        child: loading
-                            ? SizedBox(
-                                width: 30,
-                                height: 30,
-                                child: CircularProgressIndicator(),
-                              )
-                            : Text(
-                                "Login",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
                         onPressed: () {
                           getUserDetails(usernameController.text.toString(),
                               passwordController.text.toString());
@@ -169,8 +161,18 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 3.h,
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: SizedBox(
+                  height: 30,
+                  child: loading
+                      ? SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(),
+                        )
+                      : null,
+                ),
               ),
               const Text(
                 'Created by $devName ❤️',

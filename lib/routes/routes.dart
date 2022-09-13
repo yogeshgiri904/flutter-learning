@@ -9,4 +9,5 @@ class MyRoutes {
   static String userDataRoute = '/userData';
   static String basicNavRoute = '/basicNav';
   static String reportRoute = '/report';
+  static String profileRoute = '/userProfile';
 }

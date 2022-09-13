@@ -6,6 +6,7 @@ import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/pages/constants.dart';
 import 'package:iMaz/pages/report.dart';
 import 'package:iMaz/pages/rough.dart';
+import 'package:iMaz/pages/userProfile.dart';
 import 'package:iMaz/pages/wallet.dart';
 import 'constants.dart';
 
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     Report(),
     DashboardPage(),
     WalletPage(),
-    RoughPage(),
+    UserProfile(),
   ];
 
   @override
@@ -30,53 +31,39 @@ class _HomePageState extends State<HomePage> {
     final brightness = MediaQuery.of(context).platformBrightness;
     final isDark = (brightness == Brightness.dark) ? 1 : 0;
     var scaffold = Scaffold(
-      backgroundColor: pureWhite,
+      backgroundColor: primaryShadowColor,
       body: pageList[navIndex],
-      // floatingActionButton: Container(
-      //   decoration: BoxDecoration(
-      //       shape: BoxShape.circle,
-      //       color: primaryColor,
-      //       boxShadow: [
-      //         BoxShadow(WW
-      //             color: Colors.grey.shade500, spreadRadius: .2, blurRadius: 5)
-      //       ]),
-      //   child: IconButton(
-      //     onPressed: () {
-      //       Navigator.pushNamed(context, MyRoutes.loginRoute);
-      //     },
-      //     icon: const Icon(Icons.logout),
-      //     color: pureWhite,
-      //   ),
-      // ),
       bottomNavigationBar: CurvedNavigationBar(
         index: navIndex,
         backgroundColor: Colors.transparent,
-        color: isDark == 1 ? pureBlack : primaryColor,
-        items: const [
+        color: isDark == 1 ? pureBlack : pureWhite,
+        items: [
           Icon(
             Icons.upload_file_outlined,
             size: 30,
-            color: pureWhite,
+            color: navIndex == 0 ? primaryColor : Colors.grey,
           ),
           Icon(
             Icons.my_library_books_outlined,
             size: 30,
-            color: pureWhite,
+            color: navIndex == 1 ? primaryColor : Colors.grey,
           ),
           Icon(
-            Icons.dashboard_outlined,
-            size: 30,
-            color: pureWhite,
+            navIndex == 2
+                ? Icons.space_dashboard_rounded
+                : Icons.dashboard_outlined,
+            size: navIndex == 2 ? 42 : 30,
+            color: navIndex == 2 ? primaryColor : Colors.grey,
           ),
           Icon(
-            Icons.account_balance_wallet,
+            Icons.account_balance_wallet_outlined,
             size: 30,
-            color: pureWhite,
+            color: navIndex == 3 ? primaryColor : Colors.grey,
           ),
           Icon(
             Icons.account_circle_outlined,
             size: 30,
-            color: pureWhite,
+            color: navIndex == 4 ? primaryColor : Colors.grey,
           ),
         ],
         onTap: (index) {

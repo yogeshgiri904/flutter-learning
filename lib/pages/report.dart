@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:iMaz/Widgets/customCardView.dart';
+import 'package:iMaz/Widgets/CustomCard.dart';
 import 'package:iMaz/models/userList.dart';
 import 'package:iMaz/pages/constants.dart';
 import 'package:iMaz/Widgets/customAppBar.dart';
@@ -58,7 +58,7 @@ class _ReportState extends State<Report> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CustomCardView(
+            CustomCard(
               height: 25.h,
               weight: 46.w,
               icon: CircularPercentIndicator(
@@ -73,10 +73,8 @@ class _ReportState extends State<Report> {
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
               ),
-              primaryText: 'Course Completed',
-              secondaryText: '( 2022 )',
             ),
-            CustomCardView(
+            CustomCard(
               height: 25.h,
               weight: 46.w,
               icon: CircularPercentIndicator(
@@ -92,8 +90,6 @@ class _ReportState extends State<Report> {
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
               ),
-              primaryText: 'Seats Filled',
-              secondaryText: '( 2022 )',
             ),
           ],
         ),

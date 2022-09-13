@@ -10,9 +10,19 @@ import 'package:iMaz/pages/report.dart';
 import 'package:iMaz/pages/rough.dart';
 import 'package:iMaz/pages/splash.dart';
 import 'package:iMaz/pages/userData.dart';
+import 'package:iMaz/pages/userProfile.dart';
 import 'package:iMaz/pages/wallet.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:sizer/sizer.dart';
+import 'package:provider/provider.dart';
+import 'provider/authProvider.dart';
+
+// void main() {
+//   MultiProvider(
+//     providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+//     child: MyApp(),
+//   );
+// }
 
 void main() {
   runApp(MyApp());
@@ -28,11 +38,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         darkTheme: ThemeData(
           brightness: Brightness.dark,
-          primarySwatch: Colors.teal,
+          primarySwatch: Colors.blueGrey,
           fontFamily: GoogleFonts.raleway().fontFamily,
         ),
         theme: ThemeData(
-          primarySwatch: Colors.teal,
+          primarySwatch: Colors.blue,
           fontFamily: GoogleFonts.raleway().fontFamily,
           // primaryTextTheme: GoogleFonts.ralewayTextTheme(),
         ),
@@ -49,10 +59,7 @@ class MyApp extends StatelessWidget {
           MyRoutes.userDataRoute: (context) => UserData(),
           MyRoutes.basicNavRoute: (context) => BasicNav(),
           MyRoutes.reportRoute: (context) => Report(),
-
-          // MyRoutes.loginRoute: (context) {
-          //   return const Text('Hello');
-          // },
+          MyRoutes.profileRoute: (context) => UserProfile(),
         },
       );
     }));

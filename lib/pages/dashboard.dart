@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:iMaz/Widgets/CustomCard.dart';
+import 'package:iMaz/Widgets/StatsCard.dart';
 import 'package:iMaz/pages/constants.dart';
 import 'package:iMaz/Widgets/customAppBar.dart';
-import 'package:iMaz/Widgets/CustomCardView.dart';
+import 'package:intl/intl.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 import 'package:action_slider/action_slider.dart';
@@ -13,435 +16,407 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
+class Stats {
+  String percentage;
+  String name;
+  Color color;
+  String image;
+
+  Stats(
+      {required this.percentage,
+      required this.name,
+      this.color = primaryColor,
+      required this.image});
+}
+
 class _DashboardPageState extends State<DashboardPage> {
-  final color = secondaryFont;
-  final oprations = [
-    'Kotak Bank',
-    'SBI',
-    'Canera Bank',
-    'PNB',
-    'IndusInd Bank',
+  String dateTime = '12 Aug 2022';
+  bool notificationStatus = true;
+
+  List stats = [
+    Stats(
+        percentage: '34K',
+        name: 'Students',
+        color: Colors.blue,
+        image: 'lib/assets/img/love.png'),
+    Stats(
+        percentage: '3K',
+        name: 'Teachers',
+        color: Colors.red,
+        image: 'lib/assets/img/goal.png'),
+    Stats(
+        percentage: '38',
+        name: 'Admin',
+        color: Colors.teal,
+        image: 'lib/assets/img/medal.png'),
+    Stats(percentage: '234M', name: 'Fees', image: 'lib/assets/img/reward.png')
   ];
 
-  var checkedOpBtns;
-  var moneySend = 0;
+  setDate<String>() {
+    setState(() {
+      final now = DateTime.now();
+      dateTime = DateFormat.yMMMMd('en_US').format(now);
+    });
+    return dateTime;
+  }
+
   @override
   Widget build(BuildContext context) {
-    const invalidSnackBar =
-        SnackBar(content: Text('Please first select a payment bank.'));
     final brightness = MediaQuery.of(context).platformBrightness;
     bool isDark = (brightness == Brightness.dark) ? true : false;
     return SingleChildScrollView(
-      child:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        CustomAppBar(
-          name: "iMaz",
-          place: "Agra",
-          isSubPage: false,
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          color: primaryColor,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 5.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Hii, $devName',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: secondaryFont,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      'Welcome Back',
+                      style: TextStyle(
+                          fontSize: 3.w,
+                          color: Colors.grey,
+                          fontFamily: secondaryFont),
+                    ),
+                  ],
+                ),
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if (notificationStatus == false) {
+                          notificationStatus = true;
+                        } else {
+                          notificationStatus = false;
+                        }
+                      });
+                    },
+                    icon: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
+                      child: Icon(
+                        notificationStatus
+                            ? Icons.notifications_rounded
+                            : Icons.notifications_off_rounded,
+                      ),
+                    ))
+              ],
+            ),
+          ),
         ),
-        welcomePage(),
+        Container(
+          width: 100.w,
+          height: 10.h,
+          decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20))),
+        ),
         Stack(
           children: [
             Center(
               child: Transform.translate(
                 offset: Offset(0.0, -4.h),
                 child: Container(
-                  height: 8.h,
-                  width: 92.w,
+                  height: 7.2.h,
+                  width: 90.w,
                   child: Card(
                     elevation: 3,
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(1.w),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            hintText: 'Search',
-                            hintStyle: TextStyle(color: primaryColor),
-                            suffixIcon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.search_sharp),
-                              color: primaryColor,
-                            ),
-                            enabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(top: 14, left: 20),
-                            focusedBorder: InputBorder.none),
-                      ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: 'What you want ?',
+                          hintStyle:
+                              TextStyle(color: primaryColor, fontSize: 4.w),
+                          suffixIcon: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.search_rounded),
+                            color: primaryColor,
+                          ),
+                          enabledBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.only(top: 14, left: 20),
+                          focusedBorder: InputBorder.none),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 2.w, top: 4.h),
-              child: Container(
-                height: 8.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          checkedOpBtns = index;
-                        });
-                      },
-                      child: customLightBtn(
-                          borderColor: Colors.white,
-                          color: checkedOpBtns == index
-                              ? Colors.amber
-                              : Color.fromARGB(63, 155, 39, 176),
-                          text: oprations[index],
-                          height: 1.h,
-                          // icon: Icon(Icons.add),
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 1.w, vertical: 1.h),
-                          padding: EdgeInsets.symmetric(horizontal: 7.w)),
-                    );
-                  },
-                  itemCount: oprations.length,
                 ),
               ),
             ),
           ],
         ),
-        Container(
-          height: 55.h,
-          child: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  child: CustomCardView(
-                      height: 30.h,
-                      weight: 50.w,
-                      icon: Icon(
-                        Icons.qr_code_2,
-                        size: 30.w,
-                      ),
-                      primaryText: 'Pay',
-                      secondaryText: 'yogesh@axis',
-                      button: GestureDetector(
-                        onTap: () {
-                          checkedOpBtns != null
-                              ? showModalBottomSheet(
-                                  elevation: 3,
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (context) {
-                                    return Container(
-                                        decoration: BoxDecoration(
-                                          color: isDark == true
-                                              ? Colors.black
-                                              : Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        height: 40.h,
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.w),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: ListView(
-                                                  children: [
-                                                    Text(
-                                                      "Pay using ${oprations[checkedOpBtns]}",
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              secondaryFont,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    const Text(
-                                                      "yogesh@axis",
-                                                      style: TextStyle(
-                                                        color: Colors.blueGrey,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 6.h,
-                                                    ),
-                                                    Center(
-                                                        child: Text(
-                                                      'Rs. 30,000.00',
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              secondaryFont,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 8.w),
-                                                    ))
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 1.h,
-                                              ),
-                                              Center(
-                                                child: customSliderBtn(),
-                                              )
-                                            ],
-                                          ),
-                                        ));
-                                  },
-                                )
-                              : ScaffoldMessenger.of(context)
-                                  .showSnackBar(invalidSnackBar);
-
-                          setState(() {
-                            moneySend = moneySend == 0 ? 1 : 0;
-                          });
-                        },
-                        child: customLightBtn(
-                            borderColor: Colors.greenAccent,
-                            color: Color.fromARGB(100, 105, 240, 175),
-                            icon: Icon(Icons.send_rounded),
-                            text: 'Send',
-                            height: 5.h,
-                            width: 33.w,
-                            margin: EdgeInsets.all(3.w),
-                            padding: EdgeInsets.symmetric(horizontal: 4.w)),
-                      )),
-                ),
-              ),
-              Column(
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 2.w),
+          child: Container(
+            width: 100.w,
+            height: 50.h,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/basicNav', arguments: {
-                        'data': {'title': 'Student Rank', 'day': '(out of 200)'}
-                      });
-                    },
-                    child: precentBlock(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.home_max_rounded),
+                          label: Text(
+                            'Discover',
+                            style: TextStyle(
+                                fontSize: 3.2.w,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: secondaryFont),
+                          ),
+                        ),
+                        Text(setDate(),
+                            style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontSize: 3.2.w,
+                                fontFamily: secondaryFont)),
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/basicNav', arguments: {
-                            'data': {'title': 'Exams', 'day': 'Gand Fad Exam'}
-                          });
-                        },
-                        child: CustomCardView(
-                            height: 20.h,
-                            weight: 44.w,
-                            image: Image.asset(
-                              'lib/assets/img/discussion.png',
-                              width: 45.w / 3,
-                            ),
-                            primaryText: 'Exams',
-                            secondaryText: 'Gand Fad Exam'),
+                      CustomCard(
+                        height: 20.h,
+                        weight: 42.w,
+                        color: Color.fromARGB(255, 254, 228, 211),
+                        icon: Icon(
+                          Icons.currency_rupee_rounded,
+                          color: Color.fromARGB(255, 220, 129, 69),
+                          size: 11.w,
+                        ),
+                        text: Text(
+                          'Fee',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 220, 129, 69),
+                              fontFamily: secondaryFont),
+                        ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/basicNav', arguments: {
-                            'data': {
-                              'title': 'Downlaod',
-                              'day': 'Study Material'
-                            }
-                          });
-                        },
-                        child: CustomCardView(
-                            height: 20.h,
-                            weight: 44.w,
-                            icon: Icon(
-                              Icons.picture_as_pdf,
-                              size: 14.w,
-                            ),
-                            primaryText: 'Downlaod',
-                            secondaryText: 'Study Material'),
+                      CustomCard(
+                        height: 20.h,
+                        weight: 42.w,
+                        color: Color.fromARGB(255, 198, 238, 246),
+                        icon: Icon(
+                          Icons.verified_user_rounded,
+                          color: Color.fromARGB(255, 61, 179, 202),
+                          size: 11.w,
+                        ),
+                        text: Text(
+                          'Safety',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 61, 179, 202),
+                              fontFamily: secondaryFont),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CustomCard(
+                        height: 20.h,
+                        weight: 42.w,
+                        color: Color.fromARGB(255, 244, 218, 243),
+                        icon: Icon(
+                          Icons.favorite_rounded,
+                          color: Color.fromARGB(255, 205, 76, 201),
+                          size: 11.w,
+                        ),
+                        text: Text(
+                          'Subjects',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 205, 76, 201),
+                              fontFamily: secondaryFont),
+                        ),
+                      ),
+                      CustomCard(
+                        height: 20.h,
+                        weight: 42.w,
+                        color: Color.fromARGB(184, 204, 250, 125),
+                        icon: Icon(
+                          Icons.music_note_rounded,
+                          color: Color.fromARGB(184, 104, 157, 12),
+                          size: 11.w,
+                        ),
+                        text: Text(
+                          'Lectures',
+                          style: TextStyle(
+                              color: Color.fromARGB(184, 104, 157, 12),
+                              fontFamily: secondaryFont),
+                        ),
                       ),
                     ],
                   )
-                ],
-              ),
-              SizedBox(
-                height: 5.h,
-              )
-            ],
+                ]),
           ),
-        )
-      ]),
-    );
-  }
-}
-
-customSliderBtn() {
-  return ActionSlider.standard(
-    backgroundBorderRadius: BorderRadius.circular(50),
-    foregroundBorderRadius: BorderRadius.circular(50),
-    toggleColor: Color.fromARGB(192, 0, 150, 135),
-    backgroundColor: Color.fromARGB(139, 105, 240, 175),
-    child: const Text('Slide to pay'),
-    action: (controller) async {
-      controller.loading(); //starts loading animation
-      await Future.delayed(const Duration(seconds: 3));
-      controller.success(); //starts success animation
-    },
-  );
-}
-
-customLightBtn(
-    {borderColor,
-    color,
-    Widget icon = const SizedBox(),
-    text,
-    width,
-    height,
-    margin = const EdgeInsets.all(0),
-    padding = const EdgeInsets.all(0)}) {
-  return Padding(
-    padding: margin,
-    child: Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1,
-          color: borderColor,
         ),
-        color: color,
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: Padding(
-        padding: padding,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [Text(text), icon],
+        SizedBox(
+          height: 1.h,
         ),
-      ),
-    ),
-  );
-}
-
-welcomePage() {
-  return Container(
-    color: secondaryColor,
-    width: 100.w,
-    child: Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.h),
+        Container(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 1.h,
-              ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.w),
-                child: Container(
-                  width: 100.w,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hii, Yogesh Giri',
-                        textAlign: TextAlign.left,
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: Icon(Icons.query_stats_rounded),
+                      label: Text(
+                        'Monthly Stats',
                         style: TextStyle(
-                          fontFamily: secondaryFont,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 5.w,
-                        ),
+                            fontSize: 3.2.w,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: secondaryFont),
                       ),
-                      const Text('Good morning !'),
-                    ],
-                  ),
+                    ),
+                    Text('Know More >>',
+                        style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 3.2.w,
+                            fontFamily: secondaryFont)),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 4.h,
-              ),
+              Container(
+                  width: 100.w,
+                  height: 120,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Card(
+                              elevation: 4,
+                              child: Padding(
+                                padding: EdgeInsets.all(1.w),
+                                child: StatsCard(
+                                  height: 85,
+                                  weight: 85,
+                                  image: Image.asset(
+                                    stats[index].image,
+                                    width: 30,
+                                  ),
+                                  text: Text(
+                                    // '${double.parse((stats[index].percentage * 100).toStringAsFixed(2))} %',
+                                    stats[index].percentage,
+                                    style: TextStyle(
+                                        fontSize: 3.5.w,
+                                        fontFamily: secondaryFont,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  text2: Text(
+                                    stats[index].name,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontFamily: secondaryFont,
+                                        fontSize: 2.5.w,
+                                        color: Colors.blueGrey),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                      itemCount: stats.length,
+                    ),
+                  )),
             ],
           ),
         ),
-      ],
-    ),
-  );
-}
-
-precentBlock() {
-  return Card(
-    elevation: 3,
-    child: Container(
-        width: 92.5.w,
-        height: 20.h,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        Container(
+          child: Column(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'lib/assets/img/reward.png',
-                    width: 20.w,
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: Icon(Icons.event_note_rounded),
+                      label: Text(
+                        'Upcoming Events',
+                        style: TextStyle(
+                            fontSize: 3.2.w,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: secondaryFont),
+                      ),
+                    ),
+                    Text('Know More >>',
+                        style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 3.2.w,
+                            fontFamily: secondaryFont)),
+                  ],
+                ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Overall Rank',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontFamily: secondaryFont),
-                  ),
-                  SizedBox(height: .5.h),
-                  const Text(
-                    'Congratulations! You got 2nd rank',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      height: 1.2,
-                      fontSize: 12,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
-                  const Text(
-                    'in our class.',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 1.5.h,
-                  ),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          '66 %',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: secondaryFont),
-                        ),
-                        LinearPercentIndicator(
-                          width: 20.h,
-                          lineHeight: 14.0,
-                          percent: 0.66,
-                          backgroundColor: Color.fromARGB(255, 189, 187, 187),
-                          progressColor: Colors.blueGrey,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
+              // Container(
+              //     width: 100.w,
+              //     height: 30.h,
+              //     child: Padding(
+              //       padding: EdgeInsets.symmetric(horizontal: 5.w),
+              //       child: ListView.builder(
+              //         itemBuilder: (context, index) {
+              //           return Padding(
+              //             padding: const EdgeInsets.all(5.0),
+              //             child: ListTile(
+              //               tileColor: pureWhite,
+              //               leading: Container(
+              //                 decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(10),
+              //                   color: Colors.black26,
+              //                 ),
+              //                 child: Padding(
+              //                   padding: const EdgeInsets.all(8.0),
+              //                   child: Image.asset(
+              //                       'lib/assets/img/discussion.png'),
+              //                 ),
+              //               ),
+              //               title: Text('data'),
+              //               subtitle: Text('data'),
+              //               trailing: Text('data'),
+              //             ),
+              //           );
+              //         },
+              //         itemCount: 2,
+              //       ),
+              //     )),
             ],
           ),
-        )),
-  );
+        ),
+        SizedBox(
+          height: 10.h,
+        )
+      ],
+    ));
+  }
 }
