@@ -3,9 +3,11 @@ import 'package:iMaz/Widgets/CustomCard.dart';
 import 'package:iMaz/Widgets/StatsCard.dart';
 import 'package:iMaz/pages/constants.dart';
 import 'package:iMaz/Widgets/customAppBar.dart';
+import 'package:iMaz/provider/authProvider.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:action_slider/action_slider.dart';
 
@@ -62,6 +64,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     final brightness = MediaQuery.of(context).platformBrightness;
     bool isDark = (brightness == Brightness.dark) ? true : false;
     return SingleChildScrollView(
@@ -80,7 +84,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hii, $devName',
+                      authProvider.isLoggedIn ? authProvider.nameUser : 'Hii',
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: secondaryFont,

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:iMaz/provider/authProvider.dart';
 import 'package:iMaz/routes/routes.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:iMaz/pages/constants.dart';
 import 'package:http/http.dart' as http;
@@ -17,43 +19,26 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  var passValidation = 'NA';
-  var loading = false;
-
-  Future getUserDetails(String username, String password) async {
-    try {
-      setState(() {
-        loading = true;
-      });
-      var url = Uri.parse('http://13.126.90.63/auth/login/');
-      var response =
-          await http.post(url, body: {"email": username, "password": password});
-      var userDetails = jsonDecode(response.body);
-      var loginStatus = response.statusCode;
-      if (loginStatus == 200) {
-        Navigator.pushNamed(context, MyRoutes.homeRoute);
-      } else {
-        setState(() {
-          loading = false;
-        });
-
-        var invalidSnackBar = SnackBar(
-          content: Text('Invalid Credentials'),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(invalidSnackBar);
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  var passVal = null;
   bool securedText = true;
-  static const devName = 'Yogesh Giri';
+
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
+    Future<void> logIn() async {
+      final data = await authProvider.login(usernameController.text.toString(),
+          passwordController.text.toString());
+      if (data == true) {
+        Navigator.pushNamed(context, MyRoutes.homeRoute);
+      } else {
+        final falseSnack = SnackBar(content: Text('Invalid Credentials'));
+        ScaffoldMessenger.of(context).showSnackBar(falseSnack);
+      }
+    }
+
     final brightness = MediaQuery.of(context).platformBrightness;
     final isDark = (brightness == Brightness.dark) ? 1 : 0;
+
     var scaffold = Scaffold(
         backgroundColor: isDark == 1 ? pureBlack : pureWhite,
         body: Center(
@@ -96,13 +81,6 @@ class _LoginPageState extends State<LoginPage> {
                             enabledBorder: InputBorder.none,
                             // errorText: 'errorText', // error
                           ),
-                          validator: (value) {
-                            if (value == '' || value!.isEmpty) {
-                              return 'Username cannot be empty.';
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
                       ),
                       SizedBox(
@@ -129,15 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                                     : Icons.remove_red_eye)),
                             hintText: 'xxxxxxxx', // placeholder
                             labelText: 'Password', // label
-                            errorText:
-                                passValidation != 'NA' ? passValidation : null,
+
                             enabledBorder: InputBorder.none,
                           ),
-                          validator: (value) {
-                            if (value == '' || value!.isEmpty) {
-                              passVal = 'Password cannot be empty.';
-                            }
-                          },
                         ),
                       ),
                       SizedBox(
@@ -152,9 +124,8 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold),
                         ),
-                        onPressed: () {
-                          getUserDetails(usernameController.text.toString(),
-                              passwordController.text.toString());
+                        onPressed: () async {
+                          logIn();
                         },
                       )
                     ],
@@ -165,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(15.0),
                 child: SizedBox(
                   height: 30,
-                  child: loading
+                  child: authProvider.loading
                       ? SizedBox(
                           width: 30,
                           height: 30,
