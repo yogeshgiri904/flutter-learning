@@ -12,3 +12,4 @@ const primaryShadowColor = Color.fromARGB(255, 247, 246, 255);
 const pureBlack = Colors.black;
 const pureWhite = Colors.white;
 const defaultColor = Colors.blue;
+const baseUrl = 'http://13.126.90.63';

@@ -1,16 +1,17 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:iMaz/pages/dashboard.dart';
 import 'package:iMaz/pages/list.dart';
 import 'package:iMaz/pages/constants.dart';
 import 'package:iMaz/pages/report.dart';
-import 'package:iMaz/pages/rough.dart';
 import 'package:iMaz/pages/userProfile.dart';
 import 'package:iMaz/pages/wallet.dart';
-import 'constants.dart';
+import 'package:iMaz/provider/authProvider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -25,11 +26,15 @@ class _HomePageState extends State<HomePage> {
     WalletPage(),
     UserProfile(),
   ];
-
+  @override
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    authProvider.getUsersData();
+
     final brightness = MediaQuery.of(context).platformBrightness;
     final isDark = (brightness == Brightness.dark) ? 1 : 0;
+
     var scaffold = Scaffold(
       backgroundColor: primaryShadowColor,
       body: pageList[navIndex],

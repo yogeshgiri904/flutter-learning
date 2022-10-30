@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:iMaz/models/users.dart';
 import 'package:iMaz/provider/authProvider.dart';
 import 'package:iMaz/routes/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:iMaz/pages/constants.dart';
-import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   static const devName = 'Yogesh Giri';
@@ -29,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       final data = await authProvider.login(usernameController.text.toString(),
           passwordController.text.toString());
       if (data == true) {
+        await authProvider.userData();
         Navigator.pushNamed(context, MyRoutes.homeRoute);
       } else {
         final falseSnack = SnackBar(content: Text('Invalid Credentials'));

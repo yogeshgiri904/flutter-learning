@@ -1,15 +1,14 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:iMaz/Widgets/CustomCard.dart';
 import 'package:iMaz/Widgets/StatsCard.dart';
+import 'package:iMaz/pages/basicNav.dart';
 import 'package:iMaz/pages/constants.dart';
-import 'package:iMaz/Widgets/customAppBar.dart';
 import 'package:iMaz/provider/authProvider.dart';
+import 'package:iMaz/routes/routes.dart';
 import 'package:intl/intl.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:action_slider/action_slider.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -35,25 +34,6 @@ class _DashboardPageState extends State<DashboardPage> {
   String dateTime = '12 Aug 2022';
   bool notificationStatus = true;
 
-  List stats = [
-    Stats(
-        percentage: '34K',
-        name: 'Students',
-        color: Colors.blue,
-        image: 'lib/assets/img/love.png'),
-    Stats(
-        percentage: '3K',
-        name: 'Teachers',
-        color: Colors.red,
-        image: 'lib/assets/img/goal.png'),
-    Stats(
-        percentage: '38',
-        name: 'Admin',
-        color: Colors.teal,
-        image: 'lib/assets/img/medal.png'),
-    Stats(percentage: '234M', name: 'Fees', image: 'lib/assets/img/reward.png')
-  ];
-
   setDate<String>() {
     setState(() {
       final now = DateTime.now();
@@ -65,7 +45,25 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-
+    List stats = [
+      Stats(
+          percentage: '2387',
+          name: 'Students',
+          color: Colors.blue,
+          image: 'lib/assets/img/love.png'),
+      Stats(
+          percentage: '166',
+          name: 'Teachers',
+          color: Colors.red,
+          image: 'lib/assets/img/goal.png'),
+      Stats(
+          percentage: authProvider.userCount.toString(),
+          name: 'Admin',
+          color: Colors.teal,
+          image: 'lib/assets/img/medal.png'),
+      Stats(
+          percentage: '234M', name: 'Fees', image: 'lib/assets/img/reward.png')
+    ];
     final brightness = MediaQuery.of(context).platformBrightness;
     bool isDark = (brightness == Brightness.dark) ? true : false;
     return SingleChildScrollView(
@@ -73,7 +71,11 @@ class _DashboardPageState extends State<DashboardPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          color: primaryColor,
+          decoration: const BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20))),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 5.h),
             child: Row(
@@ -83,12 +85,17 @@ class _DashboardPageState extends State<DashboardPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      authProvider.isLoggedIn ? authProvider.nameUser : 'Hii',
-                      style: TextStyle(
+                    SizedBox(
+                      width: 60.w,
+                      child: Text(
+                        'Hii, ${StringUtils.capitalize(authProvider.userSession!.firstName)} ${StringUtils.capitalize(authProvider.userSession!.lastName)}',
+                        style: TextStyle(
                           color: Colors.white,
                           fontFamily: secondaryFont,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Text(
                       'Welcome Back',
@@ -125,15 +132,6 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
         ),
-        Container(
-          width: 100.w,
-          height: 10.h,
-          decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20))),
-        ),
         Stack(
           children: [
             Center(
@@ -168,16 +166,99 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ],
         ),
+        Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 3.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: Icon(Icons.query_stats_rounded),
+                      label: Text(
+                        'Monthly Stats',
+                        style: TextStyle(
+                            fontSize: 3.2.w,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: secondaryFont),
+                      ),
+                    ),
+                    Text(setDate(),
+                        style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: 3.2.w,
+                            fontFamily: secondaryFont)),
+                  ],
+                ),
+              ),
+              Container(
+                  width: 100.w,
+                  height: 105,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                authProvider.setNav(stats[index].name);
+                                Navigator.pushNamed(
+                                    context, MyRoutes.basicNavRoute);
+                              },
+                              child: Card(
+                                elevation: 4,
+                                child: Padding(
+                                  padding: EdgeInsets.all(1.w),
+                                  child: StatsCard(
+                                    height: 85,
+                                    weight: 85,
+                                    image: Image.asset(
+                                      stats[index].image,
+                                      width: 30,
+                                    ),
+                                    text: Text(
+                                      // '${double.parse((stats[index].percentage * 100).toStringAsFixed(2))} %',
+                                      stats[index].percentage,
+                                      style: TextStyle(
+                                          fontSize: 3.5.w,
+                                          fontFamily: secondaryFont,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    text2: Text(
+                                      stats[index].name,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontFamily: secondaryFont,
+                                          fontSize: 2.5.w,
+                                          color: Colors.blueGrey),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                      itemCount: stats.length,
+                    ),
+                  )),
+            ],
+          ),
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 2.w),
           child: Container(
             width: 100.w,
-            height: 50.h,
+            height: 45.h,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    padding: EdgeInsets.symmetric(horizontal: 3.w),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -192,7 +273,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 fontFamily: secondaryFont),
                           ),
                         ),
-                        Text(setDate(),
+                        Text('Know More >>',
                             style: TextStyle(
                                 color: Colors.blueGrey,
                                 fontSize: 3.2.w,
@@ -204,8 +285,8 @@ class _DashboardPageState extends State<DashboardPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomCard(
-                        height: 20.h,
-                        weight: 42.w,
+                        height: 18.h,
+                        weight: 45.w,
                         color: Color.fromARGB(255, 254, 228, 211),
                         icon: Icon(
                           Icons.currency_rupee_rounded,
@@ -220,8 +301,8 @@ class _DashboardPageState extends State<DashboardPage> {
                         ),
                       ),
                       CustomCard(
-                        height: 20.h,
-                        weight: 42.w,
+                        height: 18.h,
+                        weight: 45.w,
                         color: Color.fromARGB(255, 198, 238, 246),
                         icon: Icon(
                           Icons.verified_user_rounded,
@@ -241,8 +322,8 @@ class _DashboardPageState extends State<DashboardPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomCard(
-                        height: 20.h,
-                        weight: 42.w,
+                        height: 18.h,
+                        weight: 45.w,
                         color: Color.fromARGB(255, 244, 218, 243),
                         icon: Icon(
                           Icons.favorite_rounded,
@@ -257,8 +338,8 @@ class _DashboardPageState extends State<DashboardPage> {
                         ),
                       ),
                       CustomCard(
-                        height: 20.h,
-                        weight: 42.w,
+                        height: 18.h,
+                        weight: 45.w,
                         color: Color.fromARGB(184, 204, 250, 125),
                         icon: Icon(
                           Icons.music_note_rounded,
@@ -279,82 +360,6 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         SizedBox(
           height: 1.h,
-        ),
-        Container(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton.icon(
-                      onPressed: () {},
-                      icon: Icon(Icons.query_stats_rounded),
-                      label: Text(
-                        'Monthly Stats',
-                        style: TextStyle(
-                            fontSize: 3.2.w,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: secondaryFont),
-                      ),
-                    ),
-                    Text('Know More >>',
-                        style: TextStyle(
-                            color: Colors.blueGrey,
-                            fontSize: 3.2.w,
-                            fontFamily: secondaryFont)),
-                  ],
-                ),
-              ),
-              Container(
-                  width: 100.w,
-                  height: 120,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Card(
-                              elevation: 4,
-                              child: Padding(
-                                padding: EdgeInsets.all(1.w),
-                                child: StatsCard(
-                                  height: 85,
-                                  weight: 85,
-                                  image: Image.asset(
-                                    stats[index].image,
-                                    width: 30,
-                                  ),
-                                  text: Text(
-                                    // '${double.parse((stats[index].percentage * 100).toStringAsFixed(2))} %',
-                                    stats[index].percentage,
-                                    style: TextStyle(
-                                        fontSize: 3.5.w,
-                                        fontFamily: secondaryFont,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  text2: Text(
-                                    stats[index].name,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontFamily: secondaryFont,
-                                        fontSize: 2.5.w,
-                                        color: Colors.blueGrey),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      itemCount: stats.length,
-                    ),
-                  )),
-            ],
-          ),
         ),
         Container(
           child: Column(

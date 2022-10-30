@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:iMaz/provider/authProvider.dart';
 import 'package:iMaz/routes/routes.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:iMaz/pages/constants.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +20,8 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Container(
       child: Column(
         children: [
@@ -55,7 +60,7 @@ class _UserProfileState extends State<UserProfile> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white),
-                        child: Icon(
+                        child: const Icon(
                           Icons.notifications_rounded,
                         ),
                       ))
@@ -78,7 +83,7 @@ class _UserProfileState extends State<UserProfile> {
                   child: Row(
                     children: [
                       Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: pureWhite,
                         ),
@@ -99,10 +104,11 @@ class _UserProfileState extends State<UserProfile> {
                               Navigator.pushNamed(context, MyRoutes.loginRoute);
                             },
                             child: Text(
-                              '$devName',
+                              '${StringUtils.capitalize(authProvider.userSession!.firstName)} ${StringUtils.capitalize(authProvider.userSession!.lastName)}',
                               style: TextStyle(
                                   color: pureWhite,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: secondaryFont),
                             ),
                           ),
                           GestureDetector(
@@ -110,10 +116,13 @@ class _UserProfileState extends State<UserProfile> {
                               Navigator.pushNamed(context, MyRoutes.loginRoute);
                             },
                             child: Text(
-                              'Software Engineer',
+                              authProvider.userSession!.mobile,
+                              // StringUtils.capitalize(
+                              //     authProvider.userSession?[0]['mobile']),
                               style: TextStyle(
-                                color: Color.fromARGB(208, 207, 194, 194),
-                              ),
+                                  color:
+                                      const Color.fromARGB(208, 207, 194, 194),
+                                  fontFamily: secondaryFont),
                             ),
                           )
                         ],
@@ -122,24 +131,101 @@ class _UserProfileState extends State<UserProfile> {
                   )),
             ),
           ),
-          Container(
-              height: 45.h,
+          SizedBox(
+              height: 46.h,
               width: 100.w,
               child: Padding(
                 padding: EdgeInsets.all(6.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Dashboard',
                       style: TextStyle(
                         color: Colors.blueGrey,
                       ),
                     ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(0.5),
+                          child: ListTile(
+                            tileColor: pureWhite,
+                            leading: Icon(
+                              Icons.abc,
+                              size: 10.w,
+                            ),
+                            title: Text(
+                              'Setting',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: secondaryFont),
+                            ),
+                            subtitle: Text('setting details'),
+                            style: ListTileStyle.drawer,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(0.5),
+                          child: ListTile(
+                            tileColor: pureWhite,
+                            leading: Icon(
+                              Icons.abc,
+                              size: 10.w,
+                            ),
+                            title: Text(
+                              'Setting',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: secondaryFont),
+                            ),
+                            subtitle: Text('setting details'),
+                            style: ListTileStyle.drawer,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(0.5),
+                          child: ListTile(
+                            tileColor: pureWhite,
+                            leading: Icon(
+                              Icons.abc,
+                              size: 10.w,
+                            ),
+                            title: Text(
+                              'Setting',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: secondaryFont),
+                            ),
+                            subtitle: Text('setting details'),
+                            style: ListTileStyle.drawer,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(0.5),
+                          child: ListTile(
+                            tileColor: pureWhite,
+                            leading: Icon(
+                              Icons.abc,
+                              size: 10.w,
+                            ),
+                            title: Text(
+                              'Setting',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: secondaryFont),
+                            ),
+                            subtitle: Text('setting details'),
+                            style: ListTileStyle.drawer,
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               )),
-          Container(
+          SizedBox(
             height: 10.h,
             width: 100.w,
             child: Padding(
@@ -152,7 +238,7 @@ class _UserProfileState extends State<UserProfile> {
                     onTap: () {
                       Navigator.pushNamed(context, MyRoutes.loginRoute);
                     },
-                    child: Text(
+                    child: const Text(
                       'Switch to other account',
                       style: TextStyle(
                           color: defaultColor, fontWeight: FontWeight.bold),
@@ -162,7 +248,7 @@ class _UserProfileState extends State<UserProfile> {
                     onTap: () {
                       Navigator.pushNamed(context, MyRoutes.loginRoute);
                     },
-                    child: Text(
+                    child: const Text(
                       'Sign Out',
                       style: TextStyle(
                           color: Colors.deepOrange,
